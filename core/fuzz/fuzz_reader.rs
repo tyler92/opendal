@@ -30,6 +30,8 @@ use opendal::raw::tests::TEST_RUNTIME;
 use opendal::Operator;
 use opendal::Result;
 
+mod utils;
+
 const MAX_DATA_SIZE: usize = 16 * 1024 * 1024;
 
 #[derive(Clone)]
@@ -90,6 +92,7 @@ async fn fuzz_reader(op: Operator, input: FuzzInput) -> Result<()> {
 
 fuzz_target!(|input: FuzzInput| {
     let _ = logforth::stderr().try_apply();
+    utils::load_dotenv_file();
 
     let op = init_test_service().expect("operator init must succeed");
     if let Some(op) = op {
